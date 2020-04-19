@@ -1,9 +1,6 @@
 package com.feature;
 
-import com.jlopez.bankkata.Account;
-import com.jlopez.bankkata.Console;
-import com.jlopez.bankkata.StatementPrinter;
-import com.jlopez.bankkata.TransactionRepository;
+import com.jlopez.bankkata.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,14 +13,14 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PrintStatementFeature {
-    @Mock
-    Console console;
+    @Mock Console console;
+    @Mock Clock clock;
 
     private Account account;
 
     @Before
     public void setUp() throws Exception {
-        TransactionRepository transactionRepository = new TransactionRepository();
+        TransactionRepository transactionRepository = new TransactionRepository(clock);
         StatementPrinter statementPrinter = new StatementPrinter();
         account = new Account(transactionRepository, statementPrinter);
     }
