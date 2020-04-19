@@ -17,3 +17,7 @@ Create a simple bank application with the following features:
   > 02/04/2020 | -100.00 | 900.00
 
   > 10/04/2020 | 1000.00 | 1000.00
+
+## Notes:
+
+This is an example of OutSide in TDD explained by Sandro Mancuso in https://www.youtube.com/watch?v=XHnuMjah6ps
