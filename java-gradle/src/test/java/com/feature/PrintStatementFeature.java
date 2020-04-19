@@ -2,13 +2,13 @@ package com.feature;
 
 import com.jlopez.bankkata.Account;
 import com.jlopez.bankkata.Console;
+import com.jlopez.bankkata.StatementPrinter;
 import com.jlopez.bankkata.TransactionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
@@ -24,7 +24,8 @@ public class PrintStatementFeature {
     @Before
     public void setUp() throws Exception {
         TransactionRepository transactionRepository = new TransactionRepository();
-        account = new Account(transactionRepository);
+        StatementPrinter statementPrinter = new StatementPrinter();
+        account = new Account(transactionRepository, statementPrinter);
     }
 
     @Test

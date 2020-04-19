@@ -1,6 +1,8 @@
 package com.feature;
 
 import com.jlopez.bankkata.Account;
+import com.jlopez.bankkata.StatementPrinter;
+import com.jlopez.bankkata.Transaction;
 import com.jlopez.bankkata.TransactionRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,19 +10,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Arrays.*;
 import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountShould {
-    @Mock
-    TransactionRepository transactionRepository;
+    @Mock TransactionRepository transactionRepository;
+    @Mock StatementPrinter statementPrinter;
 
     private Account account;
 
     @Before
     public void setUp() throws Exception {
-        account = new Account(transactionRepository);
+        account = new Account(transactionRepository, statementPrinter);
     }
 
     @Test
@@ -35,5 +42,15 @@ public class AccountShould {
     public void store_withdrawal_transaction () {
         account.withdraw(100);
         verify(transactionRepository).addWithdrawal(100);
+    }
+
+    @Test
+    public void print_statement() {
+        List<Transaction> transactions = asList(new Transaction());
+        given(transactionRepository.allTransactions()).willReturn(transactions);
+
+        account.printStatement();
+
+        verify(statementPrinter).print(transactions);
     }
 }
