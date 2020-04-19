@@ -18,26 +18,36 @@ import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionRepositoryShould {
-    public static final String TODAY = "12/05/2015";
+    private static final String TODAY = "12/05/2015";
 
     @Mock Clock clock;
 
     private TransactionRepository transactionRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         transactionRepository = new TransactionRepository(clock);
+        given(clock.todayAsString()).willReturn(TODAY);
     }
 
     @Test
     public void create_and_store_a_deposit_transaction() {
-        given(clock.todayAsString()).willReturn(TODAY);
         transactionRepository.addDeposit(100);
 
         List<Transaction> transactions = transactionRepository.allTransactions();
 
         assertThat(transactions.size(), is(1));
         assertThat(transactions.get(0), is(transaction("12/05/2015", 100)));
+    }
+
+    @Test
+    public void create_and_store_a_withdrawal_transaction() {
+        transactionRepository.addWithdrawal(100);
+
+        List<Transaction> transactions = transactionRepository.allTransactions();
+
+        assertThat(transactions.size(), is(1));
+        assertThat(transactions.get(0), is(transaction("12/05/2015", -100)));
     }
 
     private Transaction transaction(String date, int amount) {

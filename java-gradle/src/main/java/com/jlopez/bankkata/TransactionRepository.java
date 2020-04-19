@@ -8,18 +8,20 @@ import static java.util.Collections.*;
 
 public class TransactionRepository {
     private Clock clock;
-    List<Transaction> transactions = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public TransactionRepository(Clock clock) {
         this.clock = clock;
     }
 
     public void addDeposit(int amount) {
-        transactions.add(new Transaction(clock.todayAsString(),amount));
+        Transaction deposit = new Transaction(clock.todayAsString(),amount);
+        transactions.add(deposit);
     }
 
     public void addWithdrawal(int amount) {
-        throw new UnsupportedOperationException();
+        Transaction withdrawal = new Transaction(clock.todayAsString(),-amount);
+        transactions.add(withdrawal);
     }
 
     public List<Transaction> allTransactions() {
