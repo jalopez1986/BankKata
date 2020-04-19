@@ -11,6 +11,14 @@ public class Transaction {
         this.amount = amount;
     }
 
+    protected String date() {
+        return date;
+    }
+
+    protected int amount() {
+        return amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -24,4 +32,5 @@ public class Transaction {
     public int hashCode() {
         return Objects.hash(date, amount);
     }
+
 }

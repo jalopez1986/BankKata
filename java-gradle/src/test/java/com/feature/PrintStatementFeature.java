@@ -19,9 +19,9 @@ public class PrintStatementFeature {
     private Account account;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         TransactionRepository transactionRepository = new TransactionRepository(clock);
-        StatementPrinter statementPrinter = new StatementPrinter();
+        StatementPrinter statementPrinter = new StatementPrinter(console);
         account = new Account(transactionRepository, statementPrinter);
     }
 
